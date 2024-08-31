@@ -38,3 +38,16 @@ export interface AuthorWorklog {
 export interface Data {
   AuthorWorklog: AuthorWorklog;
 }
+
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  status: string;
+}
+
+export interface Filter {
+  role: string;
+  status: string;
+}

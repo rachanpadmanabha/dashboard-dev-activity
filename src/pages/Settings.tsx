@@ -64,7 +64,7 @@ const Settings: React.FC = () => {
   ];
 
   return (
-    <div className="p-8 bg-gradient-to-r from-gray-800 via-gray-900 to-black min-h-screen dark:bg-gray-900">
+    <div className="p-8 rounded-lg bg-gradient-to-r from-gray-800 via-gray-900 to-black min-h-screen dark:bg-gray-900">
       {/* Header Section */}
       <header className="mb-12 text-center">
         <h1 className="text-4xl font-bold text-teal-400 dark:text-teal-300">

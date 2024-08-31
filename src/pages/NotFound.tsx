@@ -4,7 +4,7 @@ import { FaHome } from "react-icons/fa";
 
 const NotFound: React.FC = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-800">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-800 rounded-lg">
       <div className="text-6xl font-bold text-gray-600 mb-4">404</div>
       <h1 className="text-3xl font-semibold mb-4">Page Not Found</h1>
       <p className="text-lg mb-6">

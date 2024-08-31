@@ -43,7 +43,7 @@ const CustomTooltip: React.FC<TooltipProps<any, any>> = ({
 
 const Overview: React.FC = () => {
   return (
-    <div className="p-8 bg-gradient-to-r from-blue-900 to-purple-700 min-h-screen text-white dark:bg-gray-900">
+    <div className="p-8 rounded-lg bg-gradient-to-r from-blue-900 to-purple-700 min-h-screen text-white dark:bg-gray-900">
       {/* Header Section */}
       <header className="mb-12 text-center">
         <motion.h1

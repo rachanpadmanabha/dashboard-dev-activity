@@ -12,7 +12,7 @@ const App: React.FC = () => {
     <Router>
       <div className="flex h-screen">
         <Sidebar />
-        <main className="flex-1 overflow-y-auto p-6 md:ml-64">
+        <main className="flex-1 overflow-y-auto p-2 ">
           <Routes>
             <Route path="/" element={<Overview />} />
             <Route path="/overview" element={<Overview />} />

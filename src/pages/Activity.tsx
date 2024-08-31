@@ -102,7 +102,7 @@ const ActivityPage: React.FC = () => {
   ];
 
   return (
-    <div className="p-6 bg-gradient-to-r from-blue-100 to-purple-100 min-h-screen">
+    <div className="p-6 rounded-lg bg-gradient-to-r from-blue-100 to-purple-100 min-h-screen">
       <header className="mb-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-2">
           Developer Activity Dashboard
@@ -142,9 +142,9 @@ const ActivityPage: React.FC = () => {
       </section>
 
       {/* Charts */}
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+      <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
         {/* Pie Chart for Activity Distribution */}
-        <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105">
+        <div className="bg-white p-6 rounded-lg col-span-1 shadow-lg transform transition-transform hover:scale-105">
           <h2 className="text-xl font-semibold mb-4 text-gray-700">
             Activity Distribution
           </h2>
@@ -154,7 +154,7 @@ const ActivityPage: React.FC = () => {
         </div>
 
         {/* Code Review Distribution (Horizontal Bar Chart) */}
-        <div className="bg-white p-6 rounded-lg shadow-lg col-span-2 transform transition-transform hover:scale-105">
+        <div className="bg-white p-6 rounded-lg shadow-lg col-span-1 lg:col-span-2 transform transition-transform hover:scale-105">
           <h2 className="text-xl font-semibold mb-4 text-gray-700">
             Code Review Distribution
           </h2>
@@ -169,7 +169,7 @@ const ActivityPage: React.FC = () => {
         </div>
 
         {/* Incident Response Time (Line Chart) */}
-        <div className="bg-white p-6 rounded-lg shadow-lg col-span-2 transform transition-transform hover:scale-105">
+        <div className="bg-white p-6 rounded-lg shadow-lg col-span-1 lg:col-span-2 transform transition-transform hover:scale-105">
           <h2 className="text-xl font-semibold mb-4 text-gray-700">
             Incident Response Time
           </h2>
@@ -184,7 +184,7 @@ const ActivityPage: React.FC = () => {
         </div>
 
         {/* PR Process Efficiency (Gauge Chart) */}
-        <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105">
+        <div className="bg-white p-6 rounded-lg col-span-1 shadow-lg transform transition-transform hover:scale-105">
           <h2 className="text-xl font-semibold mb-4 text-gray-700">
             PR Process Efficiency
           </h2>
@@ -199,7 +199,7 @@ const ActivityPage: React.FC = () => {
         </div>
 
         {/* Developer Activity Composition (Stacked Bar Chart) */}
-        <div className="bg-white p-6 rounded-lg shadow-lg col-span-3 transform transition-transform hover:scale-105">
+        <div className="bg-white p-6 rounded-lg shadow-lg col-span-1 lg:col-span-3 transform transition-transform hover:scale-105">
           <h2 className="text-xl font-semibold mb-4 text-gray-700">
             Developer Activity Composition
           </h2>
@@ -214,7 +214,7 @@ const ActivityPage: React.FC = () => {
         </div>
 
         {/* Team Activity Over Time (Line Chart) */}
-        <div className="bg-white p-6 rounded-lg shadow-lg col-span-3 transform transition-transform hover:scale-105">
+        <div className="bg-white p-6 rounded-lg shadow-lg col-span-1 lg:col-span-3 transform transition-transform hover:scale-105">
           <h2 className="text-xl font-semibold mb-4 text-gray-700">
             Team Activity Over Time
           </h2>
