@@ -19,6 +19,10 @@ const Sidebar: React.FC = () => {
     setIsOpen(!isOpen);
   };
 
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
   return (
     <div>
       {/* Burger Menu Icon */}
@@ -52,24 +56,28 @@ const Sidebar: React.FC = () => {
             icon={<FaChartLine />}
             label="Overview"
             isActive={location.pathname === "/overview"}
+            onClick={closeMenu}
           />
           <SidebarLink
             to="/activity"
             icon={<FaListAlt />}
             label="Activity"
             isActive={location.pathname === "/activity"}
+            onClick={closeMenu}
           />
           <SidebarLink
             to="/settings"
             icon={<FaCog />}
             label="Settings"
             isActive={location.pathname === "/settings"}
+            onClick={closeMenu}
           />
           <SidebarLink
             to="/users"
             icon={<FaUsers />}
             label="Users"
             isActive={location.pathname === "/users"}
+            onClick={closeMenu}
           />
         </nav>
 
@@ -112,24 +120,28 @@ const Sidebar: React.FC = () => {
             icon={<FaChartLine />}
             label="Overview"
             isActive={location.pathname === "/overview"}
+            onClick={closeMenu}
           />
           <SidebarLink
             to="/activity"
             icon={<FaListAlt />}
             label="Activity"
             isActive={location.pathname === "/activity"}
+            onClick={closeMenu}
           />
           <SidebarLink
             to="/settings"
             icon={<FaCog />}
             label="Settings"
             isActive={location.pathname === "/settings"}
+            onClick={closeMenu}
           />
           <SidebarLink
             to="/users"
             icon={<FaUsers />}
             label="Users"
             isActive={location.pathname === "/users"}
+            onClick={closeMenu}
           />
         </nav>
       </div>
@@ -142,6 +154,7 @@ interface SidebarLinkProps {
   icon: React.ReactElement;
   label: string;
   isActive: boolean;
+  onClick?: () => void; // Added onClick prop
 }
 
 const SidebarLink: React.FC<SidebarLinkProps> = ({
@@ -149,6 +162,7 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
   icon,
   label,
   isActive,
+  onClick, // Destructure onClick prop
 }) => {
   return (
     <motion.div
@@ -163,6 +177,7 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
             ? "bg-gray-700 text-yellow-300"
             : "text-gray-300 hover:bg-gray-700"
         }`}
+        onClick={onClick} // Add onClick handler
       >
         <span className="mr-4 text-2xl">{icon}</span>
         <span className="text-lg font-medium">{label}</span>
