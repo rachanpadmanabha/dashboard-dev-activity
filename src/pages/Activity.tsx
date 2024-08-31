@@ -1,18 +1,51 @@
 // src/pages/ActivityPage.tsx
-import React from "react";
-import ActivityDistributionPieChart from "../components/ActivityDistributionPieChart";
-import TopPerformerCard from "../components/TopPerformerCard";
-import CodeReviewDistributionChart from "../components/CodeReviewDistributionChart";
-import ActivityDistributionOverTimeChart from "../components/ActivityDistributionOverTimeChart";
-import BurnoutRisk from "../components/BurnoutRisk";
-import PRProcessEfficiencyGauge from "../components/PRProcessEfficiencyGaugeChart";
-import CommitPatternsHeatmap from "../components/CommitPatternsHeatmap";
-import IncidentResponseTimeLineChart from "../components/IncidentResponseTimeChart";
-import DeveloperActivityStackedBarChart from "../components/DeveloperActivityCompositionChart";
-import TeamActivityOverTimeLineChart from "../components/TeamActivityOverTimeChart";
-import NetworkGraph from "../components/TeamInteractionsNetworkGraph";
-import DayWiseActivity from "../components/DayWiseActivity";
+import React, { Suspense, lazy } from "react";
+
+// Lazy load chart components
+const ActivityDistributionPieChart = lazy(
+  () => import("../charts/ActivityDistributionPieChart")
+);
+const TopPerformerCard = lazy(() => import("../components/TopPerformerCard"));
+const CodeReviewDistributionChart = lazy(
+  () => import("../charts/CodeReviewDistributionChart")
+);
+const ActivityDistributionOverTimeChart = lazy(
+  () => import("../charts/ActivityDistributionOverTimeChart")
+);
+const BurnoutRisk = lazy(() => import("../charts/BurnoutRisk"));
+const PRProcessEfficiencyGauge = lazy(
+  () => import("../charts/PRProcessEfficiencyGaugeChart")
+);
+const CommitPatternsHeatmap = lazy(
+  () => import("../charts/CommitPatternsHeatmap")
+);
+const IncidentResponseTimeLineChart = lazy(
+  () => import("../charts/IncidentResponseTimeChart")
+);
+const DeveloperActivityStackedBarChart = lazy(
+  () => import("../charts/DeveloperActivityCompositionChart")
+);
+const TeamActivityOverTimeLineChart = lazy(
+  () => import("../charts/TeamActivityOverTimeChart")
+);
+
 import { data } from "../data";
+
+const InfoCard: React.FC<{ title: string; value: number; icon: string }> = ({
+  title,
+  value,
+  icon,
+}) => (
+  <div className="bg-white p-6 rounded-lg shadow-lg flex items-center justify-between transform transition-transform hover:scale-105">
+    <div>
+      <h3 className="text-lg font-semibold text-gray-700">{title}</h3>
+      <p className="text-2xl font-bold text-gray-900">{value}</p>
+    </div>
+    <div className="text-4xl" aria-label={title}>
+      {icon}
+    </div>
+  </div>
+);
 
 const ActivityPage: React.FC = () => {
   const { AuthorWorklog } = data;
@@ -54,7 +87,6 @@ const ActivityPage: React.FC = () => {
       ),
       icon: "✅",
     },
-    // Add more cards if needed
     {
       title: "Total PR Merged",
       value: AuthorWorklog.rows.reduce(
@@ -84,21 +116,12 @@ const ActivityPage: React.FC = () => {
       {/* Info Cards */}
       <section className="mb-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {infoCards.map((card, index) => (
-            <div
-              key={index}
-              className="bg-white p-6 rounded-lg shadow-lg flex items-center justify-between transform transition-transform hover:scale-105"
-            >
-              <div>
-                <h3 className="text-lg font-semibold text-gray-700">
-                  {card.title}
-                </h3>
-                <p className="text-2xl font-bold text-gray-900">{card.value}</p>
-              </div>
-              <div className="text-4xl">{card.icon}</div>
-            </div>
-          ))}
-          <TopPerformerCard />
+          <Suspense fallback={<div>Loading...</div>}>
+            {infoCards.map((card, index) => (
+              <InfoCard key={index} {...card} />
+            ))}
+            <TopPerformerCard />
+          </Suspense>
         </div>
       </section>
 
@@ -113,7 +136,9 @@ const ActivityPage: React.FC = () => {
           trends in code commits, helping to assess the rhythm of development
           work.
         </p>
-        <CommitPatternsHeatmap />
+        <Suspense fallback={<div>Loading...</div>}>
+          <CommitPatternsHeatmap />
+        </Suspense>
       </section>
 
       {/* Charts */}
@@ -123,8 +148,9 @@ const ActivityPage: React.FC = () => {
           <h2 className="text-xl font-semibold mb-4 text-gray-700">
             Activity Distribution
           </h2>
-
-          <ActivityDistributionPieChart />
+          <Suspense fallback={<div>Loading...</div>}>
+            <ActivityDistributionPieChart />
+          </Suspense>
         </div>
 
         {/* Code Review Distribution (Horizontal Bar Chart) */}
@@ -137,7 +163,9 @@ const ActivityPage: React.FC = () => {
             reviews across the team, indicating who is contributing to code
             quality and collaboration.
           </p>
-          <CodeReviewDistributionChart />
+          <Suspense fallback={<div>Loading...</div>}>
+            <CodeReviewDistributionChart />
+          </Suspense>
         </div>
 
         {/* Incident Response Time (Line Chart) */}
@@ -150,7 +178,9 @@ const ActivityPage: React.FC = () => {
             period. It helps in identifying any delays and measuring the
             efficiency of incident management.
           </p>
-          <IncidentResponseTimeLineChart />
+          <Suspense fallback={<div>Loading...</div>}>
+            <IncidentResponseTimeLineChart />
+          </Suspense>
         </div>
 
         {/* PR Process Efficiency (Gauge Chart) */}
@@ -163,7 +193,9 @@ const ActivityPage: React.FC = () => {
             process, providing insights into how quickly PRs are reviewed and
             merged.
           </p>
-          <PRProcessEfficiencyGauge />
+          <Suspense fallback={<div>Loading...</div>}>
+            <PRProcessEfficiencyGauge />
+          </Suspense>
         </div>
 
         {/* Developer Activity Composition (Stacked Bar Chart) */}
@@ -176,7 +208,9 @@ const ActivityPage: React.FC = () => {
             activities by developers. It provides an overview of who is
             contributing to different aspects of the project.
           </p>
-          <DeveloperActivityStackedBarChart />
+          <Suspense fallback={<div>Loading...</div>}>
+            <DeveloperActivityStackedBarChart />
+          </Suspense>
         </div>
 
         {/* Team Activity Over Time (Line Chart) */}
@@ -189,20 +223,20 @@ const ActivityPage: React.FC = () => {
             and troughs in productivity and helping identify patterns in team
             behavior.
           </p>
-          <TeamActivityOverTimeLineChart />
+          <Suspense fallback={<div>Loading...</div>}>
+            <TeamActivityOverTimeLineChart />
+          </Suspense>
         </div>
+      </section>
 
-        {/* Activity Distribution Over TimeChart */}
-        <div className="bg-white p-6 rounded-lg shadow-lg col-span-3 transform transition-transform hover:scale-105">
-          <h2 className="text-xl font-semibold mb-4 text-gray-700">
-            Activity Distribution Over Time
-          </h2>
-          <p className="text-gray-700 mb-6">
-            This chart shows how different activities have evolved over time,
-            providing insights into shifting priorities and workloads.
-          </p>
-          <ActivityDistributionOverTimeChart />
-        </div>
+      {/* Burnout Risk */}
+      <section className="bg-white p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105 mb-8">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+          Burnout Risk
+        </h2>
+        <Suspense fallback={<div>Loading...</div>}>
+          <BurnoutRisk />
+        </Suspense>
       </section>
     </div>
   );

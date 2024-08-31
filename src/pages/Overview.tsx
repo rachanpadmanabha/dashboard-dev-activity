@@ -9,6 +9,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  TooltipProps,
 } from "recharts";
 import { motion } from "framer-motion";
 
@@ -23,8 +24,12 @@ const data = [
   { name: "Sunday", users: 180 },
 ];
 
-// Custom Tooltip Component
-const CustomTooltip = ({ payload, label, active }: any) => {
+// Custom Tooltip Component with Proper Typing
+const CustomTooltip: React.FC<TooltipProps<any, any>> = ({
+  payload,
+  label,
+  active,
+}) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-gray-800 border border-gray-600 rounded-lg p-4">
@@ -91,77 +96,52 @@ const Overview: React.FC = () => {
       {/* Features Section */}
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {/* Feature Card */}
-        <motion.div
-          className="bg-gray-800 shadow-lg rounded-lg p-6 transform hover:scale-105 transition-transform duration-300"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          <div className="flex items-center justify-center bg-yellow-800 p-4 rounded-full mb-4">
-            <FaChartLine className="text-yellow-300 text-4xl" />
-          </div>
-          <h3 className="text-xl font-semibold text-yellow-300 mb-2">
-            Analytics
-          </h3>
-          <p className="text-gray-400">
-            Gain insights into your data with comprehensive analytics tools.
-            Track key metrics and make informed decisions.
-          </p>
-        </motion.div>
-
-        <motion.div
-          className="bg-gray-800 shadow-lg rounded-lg p-6 transform hover:scale-105 transition-transform duration-300"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <div className="flex items-center justify-center bg-green-800 p-4 rounded-full mb-4">
-            <FaUsers className="text-green-300 text-4xl" />
-          </div>
-          <h3 className="text-xl font-semibold text-green-300 mb-2">
-            User Management
-          </h3>
-          <p className="text-gray-400">
-            Manage user roles and permissions seamlessly. Ensure the right
-            people have access to the right resources.
-          </p>
-        </motion.div>
-
-        <motion.div
-          className="bg-gray-800 shadow-lg rounded-lg p-6 transform hover:scale-105 transition-transform duration-300"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-        >
-          <div className="flex items-center justify-center bg-yellow-600 p-4 rounded-full mb-4">
-            <FaCog className="text-yellow-300 text-4xl" />
-          </div>
-          <h3 className="text-xl font-semibold text-yellow-300 mb-2">
-            Settings
-          </h3>
-          <p className="text-gray-400">
-            Customize your dashboard to fit your needs. Adjust settings,
-            preferences, and configurations with ease.
-          </p>
-        </motion.div>
-
-        <motion.div
-          className="bg-gray-800 shadow-lg rounded-lg p-6 transform hover:scale-105 transition-transform duration-300"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-        >
-          <div className="flex items-center justify-center bg-red-800 p-4 rounded-full mb-4">
-            <FaRocket className="text-red-300 text-4xl" />
-          </div>
-          <h3 className="text-xl font-semibold text-red-300 mb-2">
-            Performance
-          </h3>
-          <p className="text-gray-400">
-            Monitor system performance and ensure optimal operation. Identify
-            and resolve issues promptly.
-          </p>
-        </motion.div>
+        {[
+          {
+            icon: FaChartLine,
+            color: "yellow-800",
+            title: "Analytics",
+            description:
+              "Gain insights into your data with comprehensive analytics tools.",
+          },
+          {
+            icon: FaUsers,
+            color: "green-800",
+            title: "User Management",
+            description: "Manage user roles and permissions seamlessly.",
+          },
+          {
+            icon: FaCog,
+            color: "yellow-600",
+            title: "Settings",
+            description: "Customize your dashboard to fit your needs.",
+          },
+          {
+            icon: FaRocket,
+            color: "red-800",
+            title: "Performance",
+            description:
+              "Monitor system performance and ensure optimal operation.",
+          },
+        ].map(({ icon: Icon, color, title, description }, index) => (
+          <motion.div
+            key={title}
+            className="bg-gray-800 shadow-lg rounded-lg p-6 transform hover:scale-105 transition-transform duration-300"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.2 }}
+          >
+            <div
+              className={`flex items-center justify-center bg-${color} p-4 rounded-full mb-4`}
+            >
+              <Icon className="text-yellow-300 text-4xl" />
+            </div>
+            <h3 className="text-xl font-semibold text-yellow-300 mb-2">
+              {title}
+            </h3>
+            <p className="text-gray-400">{description}</p>
+          </motion.div>
+        ))}
       </section>
 
       {/* Call to Action Section */}

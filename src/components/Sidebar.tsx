@@ -50,7 +50,7 @@ const Sidebar: React.FC = () => {
 
       {/* User Profile Section */}
       <div className="p-4 border-t border-gray-700 bg-gray-800 flex items-center space-x-4 mt-auto">
-        <i className="fa fa-user" aria-hidden="true"></i>
+        <i className="fa fa-user text-2xl" aria-hidden="true" />
         <div className="text-gray-300">
           <p className="font-semibold text-lg">John Doe</p>
           <p className="text-sm">john.doe@example.com</p>
@@ -62,7 +62,7 @@ const Sidebar: React.FC = () => {
 
 interface SidebarLinkProps {
   to: string;
-  icon: React.ReactNode;
+  icon: React.ReactElement;
   label: string;
   isActive: boolean;
 }
@@ -76,6 +76,7 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
   return (
     <motion.div
       whileHover={{ scale: 1.05, backgroundColor: "#4b5563" }}
+      whileTap={{ scale: 0.95 }}
       transition={{ duration: 0.3 }}
     >
       <Link

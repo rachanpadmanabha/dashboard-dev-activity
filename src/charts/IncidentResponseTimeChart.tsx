@@ -1,7 +1,26 @@
 // src/components/IncidentResponseTimeChart.tsx
 import React from "react";
 import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+} from "chart.js";
 import { data } from "../data";
+
+// Register required components
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  LineElement,
+  CategoryScale,
+  LinearScale
+);
 
 const options = {
   responsive: true,

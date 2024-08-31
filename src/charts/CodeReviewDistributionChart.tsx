@@ -23,6 +23,7 @@ ChartJS.register(
 
 const CodeReviewDistributionChart: React.FC = () => {
   const labels = data.AuthorWorklog.rows.map((row) => row.name);
+
   const chartData = {
     labels,
     datasets: [
@@ -35,6 +36,8 @@ const CodeReviewDistributionChart: React.FC = () => {
           return prReviewed ? parseInt(prReviewed.value) : 0;
         }),
         backgroundColor: "#C2528B",
+        borderColor: "#A23B7B",
+        borderWidth: 1,
       },
     ],
   };
@@ -44,9 +47,17 @@ const CodeReviewDistributionChart: React.FC = () => {
     scales: {
       x: {
         beginAtZero: true,
+        title: {
+          display: true,
+          text: "Number of PRs Reviewed",
+        },
       },
       y: {
         beginAtZero: true,
+        title: {
+          display: true,
+          text: "Author",
+        },
       },
     },
     plugins: {

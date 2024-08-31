@@ -1,4 +1,3 @@
-// src/pages/Users.tsx
 import React, { useState } from "react";
 import {
   FaSearch,
@@ -10,8 +9,20 @@ import {
 import { motion } from "framer-motion";
 import Modal from "react-modal";
 
-// Sample user data
-const initialUserData = [
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  status: string;
+}
+
+interface Filter {
+  role: string;
+  status: string;
+}
+
+const initialUserData: User[] = [
   {
     id: 1,
     name: "John Doe",
@@ -43,21 +54,20 @@ const initialUserData = [
 ];
 
 const Users: React.FC = () => {
-  const [users, setUsers] = useState(initialUserData);
+  const [users, setUsers] = useState<User[]>(initialUserData);
   const [searchTerm, setSearchTerm] = useState("");
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-  const [editUser, setEditUser] = useState<any>(null);
-  const [newUser, setNewUser] = useState({
+  const [editUser, setEditUser] = useState<User | null>(null);
+  const [newUser, setNewUser] = useState<Omit<User, "id">>({
     name: "",
     email: "",
     role: "",
     status: "Active",
   });
-  const [filter, setFilter] = useState({ role: "", status: "" });
+  const [filter, setFilter] = useState<Filter>({ role: "", status: "" });
 
-  // Filter data based on search term
   const filteredData = users
     .filter(
       (user) =>
@@ -70,7 +80,6 @@ const Users: React.FC = () => {
         (filter.status === "" || user.status === filter.status)
     );
 
-  // Handlers
   const handleAddUser = () => {
     setUsers([...users, { ...newUser, id: users.length + 1 }]);
     setNewUser({ name: "", email: "", role: "", status: "Active" });
@@ -91,7 +100,7 @@ const Users: React.FC = () => {
     setUsers(users.filter((user) => user.id !== id));
   };
 
-  const handleOpenEditModal = (user: any) => {
+  const handleOpenEditModal = (user: User) => {
     setEditUser(user);
     setIsEditModalOpen(true);
   };
@@ -202,28 +211,20 @@ const Users: React.FC = () => {
                     {user.role}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
-                    <span
-                      className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                        user.status === "Active"
-                          ? "bg-green-500 text-green-900"
-                          : "bg-red-500 text-red-900"
-                      }`}
-                    >
-                      {user.status}
-                    </span>
+                    {user.status}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400 flex items-center space-x-3">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
                     <button
-                      className="text-yellow-400 hover:text-yellow-300"
+                      className="mr-2 text-blue-500 hover:text-blue-400"
                       onClick={() => handleOpenEditModal(user)}
                     >
-                      <FaEdit className="text-xl" />
+                      <FaEdit />
                     </button>
                     <button
-                      className="text-red-400 hover:text-red-300"
+                      className="text-red-500 hover:text-red-400"
                       onClick={() => handleDeleteUser(user.id)}
                     >
-                      <FaTrash className="text-xl" />
+                      <FaTrash />
                     </button>
                   </td>
                 </tr>
@@ -238,52 +239,76 @@ const Users: React.FC = () => {
         isOpen={isAddModalOpen}
         onRequestClose={() => setIsAddModalOpen(false)}
         contentLabel="Add User Modal"
-        className="bg-gray-800 p-6 mx-auto my-20 max-w-md rounded-lg"
-        overlayClassName="fixed inset-0 bg-gray-900 bg-opacity-75"
+        className="bg-gray-900 text-white max-w-md mx-auto mt-20 p-6 rounded-lg"
+        overlayClassName="fixed inset-0 bg-black bg-opacity-50"
       >
-        <h2 className="text-2xl font-bold text-yellow-300 mb-4">Add User</h2>
+        <h2 className="text-2xl mb-4">Add User</h2>
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleAddUser();
           }}
         >
-          <label className="block text-sm font-medium text-gray-300 mb-2">
-            Name
+          <div className="mb-4">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-300"
+            >
+              Name
+            </label>
             <input
+              id="name"
               type="text"
-              className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+              className="mt-1 w-full p-2 bg-gray-800 border border-gray-600 rounded-lg text-gray-300"
               value={newUser.name}
               onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
               required
             />
-          </label>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
-            Email
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-300"
+            >
+              Email
+            </label>
             <input
+              id="email"
               type="email"
-              className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+              className="mt-1 w-full p-2 bg-gray-800 border border-gray-600 rounded-lg text-gray-300"
               value={newUser.email}
               onChange={(e) =>
                 setNewUser({ ...newUser, email: e.target.value })
               }
               required
             />
-          </label>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
-            Role
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="role"
+              className="block text-sm font-medium text-gray-300"
+            >
+              Role
+            </label>
             <input
+              id="role"
               type="text"
-              className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+              className="mt-1 w-full p-2 bg-gray-800 border border-gray-600 rounded-lg text-gray-300"
               value={newUser.role}
               onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
               required
             />
-          </label>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
-            Status
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="status"
+              className="block text-sm font-medium text-gray-300"
+            >
+              Status
+            </label>
             <select
-              className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+              id="status"
+              className="mt-1 w-full p-2 bg-gray-800 border border-gray-600 rounded-lg text-gray-300"
               value={newUser.status}
               onChange={(e) =>
                 setNewUser({ ...newUser, status: e.target.value })
@@ -292,18 +317,18 @@ const Users: React.FC = () => {
               <option value="Active">Active</option>
               <option value="Inactive">Inactive</option>
             </select>
-          </label>
-          <div className="flex justify-end space-x-4 mt-4">
+          </div>
+          <div className="flex justify-end">
             <button
               type="button"
-              className="bg-gray-600 px-4 py-2 rounded-lg hover:bg-gray-500"
+              className="mr-4 bg-gray-600 px-4 py-2 rounded-lg"
               onClick={() => setIsAddModalOpen(false)}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="bg-yellow-500 px-4 py-2 rounded-lg text-gray-900 hover:bg-yellow-600"
+              className="bg-yellow-500 px-4 py-2 rounded-lg"
             >
               Add User
             </button>
@@ -316,10 +341,10 @@ const Users: React.FC = () => {
         isOpen={isEditModalOpen}
         onRequestClose={() => setIsEditModalOpen(false)}
         contentLabel="Edit User Modal"
-        className="bg-gray-800 p-6 mx-auto my-20 max-w-md rounded-lg"
-        overlayClassName="fixed inset-0 bg-gray-900 bg-opacity-75"
+        className="bg-gray-900 text-white max-w-md mx-auto mt-20 p-6 rounded-lg"
+        overlayClassName="fixed inset-0 bg-black bg-opacity-50"
       >
-        <h2 className="text-2xl font-bold text-yellow-300 mb-4">Edit User</h2>
+        <h2 className="text-2xl mb-4">Edit User</h2>
         {editUser && (
           <form
             onSubmit={(e) => {
@@ -327,46 +352,70 @@ const Users: React.FC = () => {
               handleEditUser();
             }}
           >
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Name
+            <div className="mb-4">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-300"
+              >
+                Name
+              </label>
               <input
+                id="name"
                 type="text"
-                className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+                className="mt-1 w-full p-2 bg-gray-800 border border-gray-600 rounded-lg text-gray-300"
                 value={editUser.name}
                 onChange={(e) =>
                   setEditUser({ ...editUser, name: e.target.value })
                 }
                 required
               />
-            </label>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Email
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-300"
+              >
+                Email
+              </label>
               <input
+                id="email"
                 type="email"
-                className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+                className="mt-1 w-full p-2 bg-gray-800 border border-gray-600 rounded-lg text-gray-300"
                 value={editUser.email}
                 onChange={(e) =>
                   setEditUser({ ...editUser, email: e.target.value })
                 }
                 required
               />
-            </label>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Role
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="role"
+                className="block text-sm font-medium text-gray-300"
+              >
+                Role
+              </label>
               <input
+                id="role"
                 type="text"
-                className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+                className="mt-1 w-full p-2 bg-gray-800 border border-gray-600 rounded-lg text-gray-300"
                 value={editUser.role}
                 onChange={(e) =>
                   setEditUser({ ...editUser, role: e.target.value })
                 }
                 required
               />
-            </label>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Status
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="status"
+                className="block text-sm font-medium text-gray-300"
+              >
+                Status
+              </label>
               <select
-                className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+                id="status"
+                className="mt-1 w-full p-2 bg-gray-800 border border-gray-600 rounded-lg text-gray-300"
                 value={editUser.status}
                 onChange={(e) =>
                   setEditUser({ ...editUser, status: e.target.value })
@@ -375,18 +424,18 @@ const Users: React.FC = () => {
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
               </select>
-            </label>
-            <div className="flex justify-end space-x-4 mt-4">
+            </div>
+            <div className="flex justify-end">
               <button
                 type="button"
-                className="bg-gray-600 px-4 py-2 rounded-lg hover:bg-gray-500"
+                className="mr-4 bg-gray-600 px-4 py-2 rounded-lg"
                 onClick={() => setIsEditModalOpen(false)}
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="bg-yellow-500 px-4 py-2 rounded-lg text-gray-900 hover:bg-yellow-600"
+                className="bg-yellow-500 px-4 py-2 rounded-lg"
               >
                 Save Changes
               </button>
@@ -400,55 +449,59 @@ const Users: React.FC = () => {
         isOpen={isFilterModalOpen}
         onRequestClose={() => setIsFilterModalOpen(false)}
         contentLabel="Filter Modal"
-        className="bg-gray-800 p-6 mx-auto my-20 max-w-md rounded-lg"
-        overlayClassName="fixed inset-0 bg-gray-900 bg-opacity-75"
+        className="bg-gray-900 text-white max-w-md mx-auto mt-20 p-6 rounded-lg"
+        overlayClassName="fixed inset-0 bg-black bg-opacity-50"
       >
-        <h2 className="text-2xl font-bold text-yellow-300 mb-4">
-          Filter Users
-        </h2>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleApplyFilter();
-          }}
-        >
-          <label className="block text-sm font-medium text-gray-300 mb-2">
+        <h2 className="text-2xl mb-4">Filter Users</h2>
+        <div className="mb-4">
+          <label
+            htmlFor="role-filter"
+            className="block text-sm font-medium text-gray-300"
+          >
             Role
-            <input
-              type="text"
-              className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300"
-              value={filter.role}
-              onChange={(e) => setFilter({ ...filter, role: e.target.value })}
-            />
           </label>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
+          <input
+            id="role-filter"
+            type="text"
+            className="mt-1 w-full p-2 bg-gray-800 border border-gray-600 rounded-lg text-gray-300"
+            value={filter.role}
+            onChange={(e) => setFilter({ ...filter, role: e.target.value })}
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="status-filter"
+            className="block text-sm font-medium text-gray-300"
+          >
             Status
-            <select
-              className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300"
-              value={filter.status}
-              onChange={(e) => setFilter({ ...filter, status: e.target.value })}
-            >
-              <option value="">All</option>
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </select>
           </label>
-          <div className="flex justify-end space-x-4 mt-4">
-            <button
-              type="button"
-              className="bg-gray-600 px-4 py-2 rounded-lg hover:bg-gray-500"
-              onClick={() => setIsFilterModalOpen(false)}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="bg-yellow-500 px-4 py-2 rounded-lg text-gray-900 hover:bg-yellow-600"
-            >
-              Apply Filter
-            </button>
-          </div>
-        </form>
+          <select
+            id="status-filter"
+            className="mt-1 w-full p-2 bg-gray-800 border border-gray-600 rounded-lg text-gray-300"
+            value={filter.status}
+            onChange={(e) => setFilter({ ...filter, status: e.target.value })}
+          >
+            <option value="">All</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
+        <div className="flex justify-end">
+          <button
+            type="button"
+            className="mr-4 bg-gray-600 px-4 py-2 rounded-lg"
+            onClick={() => setIsFilterModalOpen(false)}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            className="bg-yellow-500 px-4 py-2 rounded-lg"
+            onClick={handleApplyFilter}
+          >
+            Apply
+          </button>
+        </div>
       </Modal>
     </div>
   );

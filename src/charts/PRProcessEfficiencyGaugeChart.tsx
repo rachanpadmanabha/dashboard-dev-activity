@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+// src/components/PRProcessEfficiencyGaugeChart.tsx
+import React from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css"; // Import default styles
+import "react-circular-progressbar/dist/styles.css";
 import { data } from "../data";
 import { Tooltip } from "react-tooltip";
 
 const PRProcessEfficiencyGaugeChart: React.FC = () => {
-  // State to handle tooltip visibility
-  const [tooltipContent, setTooltipContent] = useState("");
-
   // Calculate PR efficiency
   const openPRs = data.AuthorWorklog.rows.reduce((sum, row) => {
     const prOpen = row.totalActivity.find((a) => a.name === "PR Open");
@@ -26,18 +24,16 @@ const PRProcessEfficiencyGaugeChart: React.FC = () => {
     pathColor: "#61CDBB",
     textColor: "#333",
     trailColor: "#d6d6d6",
-    strokeLinecap: "round", // Rounded edges for the progress path
+    strokeLinecap: "round",
   });
 
   return (
-    <div
-      className="relative w-80 h-80 mx-auto my-4"
-      data-tooltip-id="prEfficiencyTooltip"
-    >
+    <div className="relative w-80 h-80 mx-auto my-4">
       <CircularProgressbar
         value={efficiency}
         text={`${efficiency.toFixed(0)}%`}
         styles={styles}
+        data-tooltip-id="prEfficiencyTooltip"
       />
 
       <h3 className="text-center mt-4">PR Process Efficiency</h3>
@@ -45,15 +41,9 @@ const PRProcessEfficiencyGaugeChart: React.FC = () => {
       {/* Tooltip */}
       <Tooltip
         id="prEfficiencyTooltip"
-        // effect="solid"
         place="top"
-        content={`Open PRs: ${openPRs} \n
-        Merged PRs: ${mergedPRs}`}
-        // type="info"
-        // multiline={true}
-      >
-        {/* {tooltipContent} */}
-      </Tooltip>
+        content={`Open PRs: ${openPRs}\nMerged PRs: ${mergedPRs}`}
+      />
     </div>
   );
 };

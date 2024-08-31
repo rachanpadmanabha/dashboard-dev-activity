@@ -1,7 +1,26 @@
 // src/components/DeveloperActivityCompositionChart.tsx
 import React from "react";
 import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+} from "chart.js";
 import { data } from "../data";
+
+// Register required components
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale
+);
 
 const options = {
   responsive: true,
@@ -51,15 +70,7 @@ const DeveloperActivityCompositionChart: React.FC = () => {
     datasets,
   };
 
-  return (
-    <Bar
-      data={chartData}
-      options={options}
-      //   options={{
-      //     scales: { xAxes: [{ stacked: true }], yAxes: [{ stacked: true }] },
-      //   }}
-    />
-  );
+  return <Bar data={chartData} options={options} />;
 };
 
 export default DeveloperActivityCompositionChart;
