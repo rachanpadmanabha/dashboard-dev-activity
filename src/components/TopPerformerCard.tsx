@@ -28,7 +28,7 @@ const TopPerformerCard: React.FC = () => {
     <div
       className={`${
         animated ? "animate-bounce" : ""
-      } w-fit col-span-2 bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 p-6 shadow-xl rounded-xl transform transition-all duration-500 hover:scale-110 hover:rotate-2`}
+      } w-fit  bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 p-6 shadow-xl rounded-xl transform transition-all duration-500 hover:scale-110 hover:rotate-2`}
     >
       <div className="flex items-center space-x-4">
         <FaCrown

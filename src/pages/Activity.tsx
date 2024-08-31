@@ -115,13 +115,15 @@ const ActivityPage: React.FC = () => {
 
       {/* Info Cards */}
       <section className="mb-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          <Suspense fallback={<div>Loading...</div>}>
-            {infoCards.map((card, index) => (
-              <InfoCard key={index} {...card} />
-            ))}
-            <TopPerformerCard />
-          </Suspense>
+        <div className="flex flex-col gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <Suspense fallback={<div>Loading...</div>}>
+              {infoCards.map((card, index) => (
+                <InfoCard key={index} {...card} />
+              ))}
+            </Suspense>
+          </div>
+          <TopPerformerCard />
         </div>
       </section>
 
