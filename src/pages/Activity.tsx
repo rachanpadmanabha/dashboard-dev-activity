@@ -1,5 +1,4 @@
-// src/pages/ActivityPage.tsx
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, startTransition } from "react";
 
 // Lazy load chart components
 const ActivityDistributionPieChart = lazy(
@@ -123,7 +122,9 @@ const ActivityPage: React.FC = () => {
               ))}
             </Suspense>
           </div>
-          <TopPerformerCard />
+          <Suspense fallback={<div>Loading...</div>}>
+            <TopPerformerCard />
+          </Suspense>
         </div>
       </section>
 
@@ -199,36 +200,35 @@ const ActivityPage: React.FC = () => {
             <PRProcessEfficiencyGauge />
           </Suspense>
         </div>
+      </section>
 
-        {/* Developer Activity Composition (Stacked Bar Chart) */}
-        <div className="bg-white p-6 rounded-lg shadow-lg col-span-1 lg:col-span-3 transform transition-transform hover:scale-105">
-          <h2 className="text-xl font-semibold mb-4 text-gray-700">
-            Developer Activity Composition
-          </h2>
-          <p className="text-gray-700 mb-6">
-            This stacked bar chart visualizes the composition of various
-            activities by developers. It provides an overview of who is
-            contributing to different aspects of the project.
-          </p>
-          <Suspense fallback={<div>Loading...</div>}>
-            <DeveloperActivityStackedBarChart />
-          </Suspense>
-        </div>
+      {/* Developer Activity Composition (Stacked Bar Chart) */}
+      <section className="bg-white p-6 rounded-lg shadow-lg mb-8 transform transition-transform hover:scale-105">
+        <h2 className="text-xl font-semibold mb-4 text-gray-700">
+          Developer Activity Composition
+        </h2>
+        <p className="text-gray-700 mb-6">
+          This stacked bar chart displays the composition of various activities
+          performed by developers, including commits, reviews, and PR
+          activities.
+        </p>
+        <Suspense fallback={<div>Loading...</div>}>
+          <DeveloperActivityStackedBarChart />
+        </Suspense>
+      </section>
 
-        {/* Team Activity Over Time (Line Chart) */}
-        <div className="bg-white p-6 rounded-lg shadow-lg col-span-1 lg:col-span-3 transform transition-transform hover:scale-105">
-          <h2 className="text-xl font-semibold mb-4 text-gray-700">
-            Team Activity Over Time
-          </h2>
-          <p className="text-gray-700 mb-6">
-            The line chart below tracks team activity over time, showing peaks
-            and troughs in productivity and helping identify patterns in team
-            behavior.
-          </p>
-          <Suspense fallback={<div>Loading...</div>}>
-            <TeamActivityOverTimeLineChart />
-          </Suspense>
-        </div>
+      {/* Team Activity Over Time (Line Chart) */}
+      <section className="bg-white p-6 rounded-lg shadow-lg mb-8 transform transition-transform hover:scale-105">
+        <h2 className="text-xl font-semibold mb-4 text-gray-700">
+          Team Activity Over Time
+        </h2>
+        <p className="text-gray-700 mb-6">
+          The line chart below illustrates team activity over time, showing how
+          engagement and contributions fluctuate.
+        </p>
+        <Suspense fallback={<div>Loading...</div>}>
+          <TeamActivityOverTimeLineChart />
+        </Suspense>
       </section>
     </div>
   );
