@@ -228,16 +228,6 @@ const ActivityPage: React.FC = () => {
           </Suspense>
         </div>
       </section>
-
-      {/* Burnout Risk */}
-      <section className="bg-white p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105 mb-8">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-          Burnout Risk
-        </h2>
-        <Suspense fallback={<div>Loading...</div>}>
-          <BurnoutRisk />
-        </Suspense>
-      </section>
     </div>
   );
 };

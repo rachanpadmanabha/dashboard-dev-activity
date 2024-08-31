@@ -28,23 +28,27 @@ const PRProcessEfficiencyGaugeChart: React.FC = () => {
   });
 
   return (
-    <div className="relative w-80 h-80 mx-auto my-4">
-      <CircularProgressbar
-        value={efficiency}
-        text={`${efficiency.toFixed(0)}%`}
-        styles={styles}
+    <>
+      <div
+        className="relative w-80 h-80 mx-auto my-4"
         data-tooltip-id="prEfficiencyTooltip"
-      />
+      >
+        <CircularProgressbar
+          value={efficiency}
+          text={`${efficiency.toFixed(0)}%`}
+          styles={styles}
+        />
 
-      <h3 className="text-center mt-4">PR Process Efficiency</h3>
+        <h3 className="text-center mt-4">PR Process Efficiency</h3>
 
-      {/* Tooltip */}
+        {/* Tooltip */}
+      </div>
       <Tooltip
         id="prEfficiencyTooltip"
         place="top"
         content={`Open PRs: ${openPRs}\nMerged PRs: ${mergedPRs}`}
       />
-    </div>
+    </>
   );
 };
 

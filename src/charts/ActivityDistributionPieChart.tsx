@@ -44,7 +44,7 @@ const ActivityDistributionPieChart: React.FC = () => {
           label: function (tooltipItem: any) {
             const dataset = tooltipItem.dataset;
             const value = dataset.data[tooltipItem.dataIndex];
-            return `${dataset.label}: ${value}`;
+            return ` ${value}`;
           },
         },
       },
